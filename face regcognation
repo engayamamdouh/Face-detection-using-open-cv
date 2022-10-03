@@ -1,0 +1,19 @@
+import cv2 as cv
+img = cv.imread('facesgroup.jpg')
+cv.imshow('Group of 6 people', img)
+cv.waitKey(0)
+gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+cv.imshow('Gray People', gray)
+cv.waitKey(0)
+import matplotlib.pyplot as plt
+haar_cascade = cv.CascadeClassifier('haar_face.xml')
+faces_rect = haar_cascade.detectMultiScale(gray, scaleFactor=1.33, minNeighbors=1)
+
+print(f'Number of faces found = {len(faces_rect)}')
+
+for (x,y,w,h) in faces_rect:
+    cv.rectangle(img, (x,y), (x+w,y+h), (0,255,0), thickness=2)
+
+#plt.imshow(img , cmap="gray")
+cv.imshow('Detected Faces', img)
+cv.waitKey(0)
